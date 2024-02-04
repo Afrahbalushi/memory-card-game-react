@@ -46,7 +46,7 @@ const App = () => {
           <div key={index} className="col-4 col-md-3 col-lg-2 mb-3">
             <div
               onClick={() => handleCardClick(index)}
-              className={`card h-100 bg-gradient-to-br from-purple-500 to-pink-500 text-white text-center ${
+              className={`card h-100 text-white text-center ${
                 flippedIndexes.includes(index) || matchedPairs.includes(card) ? 'flipped' : ''
               }`}
             >
