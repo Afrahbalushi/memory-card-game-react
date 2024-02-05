@@ -61,8 +61,8 @@ const App = () => {
         <div className="col-12 mb-3">
           <div className="text-center">
             <h2>Time Remaining: {timer} seconds</h2>
-            {gameOver && matchedPairs.length !== cards.length / 2 && <h3>Game Over</h3>}
-            {matchedPairs.length === cards.length / 2 && <h3>Win!</h3>}
+            {gameOver && matchedPairs.length !== cards.length / 2 && <h3 id='red'>Game Over</h3>}
+            {matchedPairs.length === cards.length / 2 && <h3 id='green'>Win!</h3>}
           </div>
         </div>
         {cards.map((card, index) => (
