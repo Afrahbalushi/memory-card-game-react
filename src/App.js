@@ -21,6 +21,20 @@ const App = () => {
   const [cards] = useState(shuffleArray([...images, ...images]));
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
+  const [timer, setTimer] = useState(60); 
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (timer > 0 && matchedPairs.length !== cards.length / 2) {
+        setTimer((prev) => prev - 1);
+      } else {
+        clearInterval(timerInterval);
+        alert('Game Over!'); 
+      }
+    }, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, [timer, matchedPairs, cards]);
 
   useEffect(() => {
     if (flippedIndexes.length === 2) {
@@ -40,8 +54,13 @@ const App = () => {
 
   return (
     <div className="container mt-5">
-       <h1 className="text-center mb-4">Memory Card Game</h1>
+      <h1 className="text-center mb-4">Memory Card Game</h1>
       <div className="row">
+        <div className="col-12 mb-3">
+          <div className="text-center">
+            <h2>Time Remaining: {timer} seconds</h2>
+          </div>
+        </div>
         {cards.map((card, index) => (
           <div key={index} className="col-4 col-md-3 col-lg-2 mb-3">
             <div
@@ -66,9 +85,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
