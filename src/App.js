@@ -28,7 +28,7 @@ const App = () => {
   const [cards, setCards] = useState([]);
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
-  const [timer, setTimer] = useState(90);
+  const [timer, setTimer] = useState(60);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [moves, setMoves] = useState(0);
@@ -87,7 +87,7 @@ const App = () => {
       <img
         src="https://th.bing.com/th/id/R.ab092b1734660d86d9c8c8d6e7beb8c6?rik=tJCG7NUU%2byTz9Q&riu=http%3a%2f%2fwww.desicomments.com%2fwp-content%2fuploads%2f2017%2f07%2fHello.gif&ehk=xYSE%2btB8K9AmY84tj6OBZ6le2wvS27Op%2b6XMmbau1BE%3d&risl=&pid=ImgRaw&r=0"  
         alt="Hello Smiley"
-        style={{ width: '100px', height: '200px' , paddingTop: 50}}  
+        style={{ width: '100px', height: '200px' , paddingTop: 60}}  
       />
       <h1 style={{ paddingTop: 20 , color: 'darkblue' , fontFamily:'fantasy', fontSize: 30}}>Welcome to<br></br> Memory Card Game</h1>
       <h2>Select a Level</h2>
