@@ -71,7 +71,7 @@ const App = () => {
         <div className="col-12 mb-3">
           <div className="text-center">
             <h2 id='time'>Time Remaining: {timer} seconds</h2>
-            <h2 id='move'>Moves: {moves}</h2>
+            <h2 id='move'>Total Moves: {moves}</h2>
             {!gameStarted && <button onClick={handleStartClick}>Start Game</button>}
             {gameOver && matchedPairs.length !== cards.length / 2 && (
               <div>
