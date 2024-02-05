@@ -58,7 +58,7 @@ const App = () => {
       <div className="row">
         <div className="col-12 mb-3">
           <div className="text-center">
-            <h2>Time Remaining: {timer} seconds</h2>
+            <h2>Time: {timer} s</h2>
           </div>
         </div>
         {cards.map((card, index) => (
