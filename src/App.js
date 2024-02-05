@@ -17,11 +17,13 @@ const shuffleArray = (array) => {
   return newArray;
 };
 
+
 const App = () => {
   const [cards] = useState(shuffleArray([...images, ...images]));
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [timer, setTimer] = useState(90); 
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -29,7 +31,7 @@ const App = () => {
         setTimer((prev) => prev - 1);
       } else {
         clearInterval(timerInterval);
-        alert('Game Over!'); 
+        setGameOver(true);
       }
     }, 1000);
 
@@ -58,7 +60,9 @@ const App = () => {
       <div className="row">
         <div className="col-12 mb-3">
           <div className="text-center">
-            <h2>Time: {timer} s</h2>
+            <h2>Time Remaining: {timer} seconds</h2>
+            {gameOver && matchedPairs.length !== cards.length / 2 && <h3>Game Over</h3>}
+            {matchedPairs.length === cards.length / 2 && <h3>Win!</h3>}
           </div>
         </div>
         {cards.map((card, index) => (
