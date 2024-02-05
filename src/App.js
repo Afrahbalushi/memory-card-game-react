@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+
 const images = [
   '🐱', '🐶', '🐭', '🐹',
   '🐰', '🦊', '🐻', '🐼',
@@ -64,6 +65,7 @@ const App = () => {
     setGameStarted(true);
   };
 
+ 
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">Memory Card Game</h1>
