@@ -24,6 +24,7 @@ const App = () => {
   const [timer, setTimer] = useState(90);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [moves, setMoves] = useState(0);
 
   useEffect(() => {
     let timerInterval;
@@ -55,6 +56,7 @@ const App = () => {
   const handleCardClick = (index) => {
     if (gameStarted && flippedIndexes.length < 2 && !flippedIndexes.includes(index) && !matchedPairs.includes(cards[index])) {
       setFlippedIndexes((prev) => [...prev, index]);
+      setMoves((prevMoves) => prevMoves + 1);
     }
   };
 
@@ -68,10 +70,21 @@ const App = () => {
       <div className="row">
         <div className="col-12 mb-3">
           <div className="text-center">
-            <h2>Time Remaining: {timer} seconds</h2>
+            <h2 id='time'>Time Remaining: {timer} seconds</h2>
+            <h2 id='move'>Moves: {moves}</h2>
             {!gameStarted && <button onClick={handleStartClick}>Start Game</button>}
-            {gameOver && matchedPairs.length !== cards.length / 2 && <h3 id='red'>Game Over</h3>}
-            {matchedPairs.length === cards.length / 2 && <h3 id='green'>Win!</h3>}
+            {gameOver && matchedPairs.length !== cards.length / 2 && (
+              <div>
+                <h3 id='red'>Game Over</h3>
+                <p>Total Moves: {moves}</p>
+              </div>
+            )}
+            {matchedPairs.length === cards.length / 2 && (
+              <div>
+                <h3 id='green'>Win!</h3>
+                <p>Total Moves: {moves}</p>
+              </div>
+            )}
           </div>
         </div>
         {cards.map((card, index) => (

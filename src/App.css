@@ -4,9 +4,13 @@ body{
 h1, h2 {
     font-size: large;
 }
-h2 {
+#time {
     text-align: left;
 }
+#move{
+    text-align: right;
+}
+
 #red{
     color: red;
 }
@@ -28,3 +32,4 @@ button {
   button:hover {
     background-color: #4d83c1; 
   }
+  
