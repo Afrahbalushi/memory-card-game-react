@@ -21,7 +21,7 @@ const App = () => {
   const [cards] = useState(shuffleArray([...images, ...images]));
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
-  const [timer, setTimer] = useState(60); 
+  const [timer, setTimer] = useState(90); 
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
