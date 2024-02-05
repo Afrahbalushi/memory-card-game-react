@@ -17,26 +17,30 @@ const shuffleArray = (array) => {
   return newArray;
 };
 
-
 const App = () => {
   const [cards] = useState(shuffleArray([...images, ...images]));
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
-  const [timer, setTimer] = useState(90); 
+  const [timer, setTimer] = useState(90);
   const [gameOver, setGameOver] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      if (timer > 0 && matchedPairs.length !== cards.length / 2) {
-        setTimer((prev) => prev - 1);
-      } else {
-        clearInterval(timerInterval);
-        setGameOver(true);
-      }
-    }, 1000);
+    let timerInterval;
+
+    if (gameStarted) {
+      timerInterval = setInterval(() => {
+        if (timer > 0 && matchedPairs.length !== cards.length / 2) {
+          setTimer((prev) => prev - 1);
+        } else {
+          clearInterval(timerInterval);
+          setGameOver(true);
+        }
+      }, 1000);
+    }
 
     return () => clearInterval(timerInterval);
-  }, [timer, matchedPairs, cards]);
+  }, [timer, matchedPairs, cards, gameStarted]);
 
   useEffect(() => {
     if (flippedIndexes.length === 2) {
@@ -49,9 +53,13 @@ const App = () => {
   }, [flippedIndexes, cards]);
 
   const handleCardClick = (index) => {
-    if (flippedIndexes.length < 2 && !flippedIndexes.includes(index) && !matchedPairs.includes(cards[index])) {
+    if (gameStarted && flippedIndexes.length < 2 && !flippedIndexes.includes(index) && !matchedPairs.includes(cards[index])) {
       setFlippedIndexes((prev) => [...prev, index]);
     }
+  };
+
+  const handleStartClick = () => {
+    setGameStarted(true);
   };
 
   return (
@@ -61,6 +69,7 @@ const App = () => {
         <div className="col-12 mb-3">
           <div className="text-center">
             <h2>Time Remaining: {timer} seconds</h2>
+            {!gameStarted && <button onClick={handleStartClick}>Start Game</button>}
             {gameOver && matchedPairs.length !== cards.length / 2 && <h3 id='red'>Game Over</h3>}
             {matchedPairs.length === cards.length / 2 && <h3 id='green'>Win!</h3>}
           </div>
