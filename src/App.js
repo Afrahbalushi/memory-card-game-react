@@ -24,6 +24,19 @@ const App = () => {
   const [timer, setTimer] = useState(90);
   const [gameOver, setGameOver] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [initialDisplay, setInitialDisplay] = useState(true);
+
+  useEffect(() => {
+    let displayTimer;
+
+    if (initialDisplay) {
+      displayTimer = setTimeout(() => {
+        setInitialDisplay(false);
+      }, 3000);
+    }
+
+    return () => clearTimeout(displayTimer);
+  }, [initialDisplay]);
 
   useEffect(() => {
     let timerInterval;
@@ -79,15 +92,11 @@ const App = () => {
             <div
               onClick={() => handleCardClick(index)}
               className={`card h-100 text-white text-center ${
-                flippedIndexes.includes(index) || matchedPairs.includes(card) ? 'flipped' : ''
+                (flippedIndexes.includes(index) || matchedPairs.includes(card)) && !initialDisplay ? 'flipped' : ''
               }`}
             >
               <div className="card-body d-flex align-items-center justify-content-center">
-                {flippedIndexes.includes(index) || matchedPairs.includes(card) ? (
-                  <span className="text-4xl">{card}</span>
-                ) : (
-                  <span className="text-4xl">🎴</span>
-                )}
+                <span className="text-4xl">{initialDisplay ? card : '🎴'}</span>
               </div>
             </div>
           </div>
