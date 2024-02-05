@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+const levels = {
+  easy: 6,
+  medium: 12,
+  hard: 18,
+};
 
 const images = [
   '🐱', '🐶', '🐭', '🐹',
@@ -19,7 +24,8 @@ const shuffleArray = (array) => {
 };
 
 const App = () => {
-  const [cards] = useState(shuffleArray([...images, ...images]));
+  const [level, setLevel] = useState(null);
+  const [cards, setCards] = useState([]);
   const [flippedIndexes, setFlippedIndexes] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [timer, setTimer] = useState(90);
@@ -28,11 +34,18 @@ const App = () => {
   const [moves, setMoves] = useState(0);
 
   useEffect(() => {
+    if (level) {
+      const newCards = shuffleArray([...images.slice(0, level / 2), ...images.slice(0, level / 2)]);
+      setCards(newCards);
+    }
+  }, [level]);
+
+  useEffect(() => {
     let timerInterval;
 
     if (gameStarted) {
       timerInterval = setInterval(() => {
-        if (timer > 0 && matchedPairs.length !== cards.length / 2) {
+        if (timer > 0 && matchedPairs.length !== level / 2) {
           setTimer((prev) => prev - 1);
         } else {
           clearInterval(timerInterval);
@@ -42,7 +55,7 @@ const App = () => {
     }
 
     return () => clearInterval(timerInterval);
-  }, [timer, matchedPairs, cards, gameStarted]);
+  }, [timer, matchedPairs, level, gameStarted]);
 
   useEffect(() => {
     if (flippedIndexes.length === 2) {
@@ -65,32 +78,34 @@ const App = () => {
     setGameStarted(true);
   };
 
- 
-  return (
+  const handleLevelClick = (selectedLevel) => {
+    setLevel(levels[selectedLevel]);
+  };
+
+  const renderLevelSelection = () => (
+    <div className="text-center">
+      <img
+        src="https://th.bing.com/th/id/R.ab092b1734660d86d9c8c8d6e7beb8c6?rik=tJCG7NUU%2byTz9Q&riu=http%3a%2f%2fwww.desicomments.com%2fwp-content%2fuploads%2f2017%2f07%2fHello.gif&ehk=xYSE%2btB8K9AmY84tj6OBZ6le2wvS27Op%2b6XMmbau1BE%3d&risl=&pid=ImgRaw&r=0"  
+        alt="Hello Smiley"
+        style={{ width: '100px', height: '200px' , paddingTop: 50}}  
+      />
+      <h1 style={{ paddingTop: 20 , color: 'darkblue' , fontFamily:'fantasy', fontSize: 30}}>Welcome to<br></br> Memory Card Game</h1>
+      <h2>Select a Level</h2>
+      {Object.keys(levels).map((l) => (
+        <button key={l} onClick={() => handleLevelClick(l)}>
+          {l}
+        </button>
+      ))}
+    </div>
+  );
+  
+
+  const renderGame = () => (
     <div className="container mt-5">
       <h1 className="text-center mb-4">Memory Card Game</h1>
-      <div className="row">
-        <div className="col-12 mb-3">
-          <div className="text-center">
-            <h2 id='time'>Time Remaining: {timer} seconds</h2>
-            <h2 id='move'>Total Moves: {moves}</h2>
-            {!gameStarted && <button onClick={handleStartClick}>Start Game</button>}
-            {gameOver && matchedPairs.length !== cards.length / 2 && (
-              <div>
-                <h3 id='red'>Game Over</h3>
-                <p>Total Moves: {moves}</p>
-              </div>
-            )}
-            {matchedPairs.length === cards.length / 2 && (
-              <div>
-                <h3 id='green'>Win!</h3>
-                <p>Total Moves: {moves}</p>
-              </div>
-            )}
-          </div>
-        </div>
+      <div className="row row-cols-md-3 row-cols-lg-4 row-cols-xl-6">
         {cards.map((card, index) => (
-          <div key={index} className="col-4 col-md-3 col-lg-2 mb-3">
+          <div key={index} className={`col mb-3`}>
             <div
               onClick={() => handleCardClick(index)}
               className={`card h-100 text-white text-center ${
@@ -108,8 +123,37 @@ const App = () => {
           </div>
         ))}
       </div>
+      <div className="text-center mt-3">
+        <h2 id='time'>Time Remaining: {timer} seconds</h2>
+        <h2 id='move'>Total Moves: {moves}</h2>
+        {!gameStarted && <button onClick={handleStartClick}>Start Game</button>}
+        {gameOver && matchedPairs.length !== level / 2 && (
+          <div>
+            <h3 id='red'>Game Over</h3>
+            <p>Total Moves: {moves}</p>
+          </div>
+        )}
+        {matchedPairs.length === level / 2 && (
+          <div>
+            <h3 id='green'>Win!</h3>
+            <p>Total Moves: {moves}</p>
+          </div>
+        )}
+      </div>
+    
     </div>
   );
+
+  return (
+    <div>
+      {!level ? renderLevelSelection() : renderGame()}
+      <footer className="text-center mt-5">
+        <p style={{fontSize:10, color:'grey'}}>&copy; 2024 Afrah Ali. All Rights Reserved.</p>
+      </footer>
+    </div>
+  );
+
+
 };
 
 export default App;
