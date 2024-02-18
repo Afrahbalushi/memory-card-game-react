@@ -3,9 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const levels = {
-  easy: 6,
-  medium: 12,
-  hard: 18,
+  easy: 8,
+  medium: 14,
+  hard: 20,
 };
 
 const images = [
