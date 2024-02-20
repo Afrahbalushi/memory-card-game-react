@@ -5,7 +5,7 @@ import './App.css';
 const levels = {
   easy: 8,
   medium: 16,
-  hard: 20,
+  hard: 24,
 };
 
 const images = [
