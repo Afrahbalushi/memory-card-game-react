@@ -67,7 +67,7 @@ const App = () => {
       setTimeout(() => setFlippedIndexes([]), 1000);
     }
   }, [flippedIndexes, cards]);
-
+ 
   const handleCardClick = (index) => {
     if (gameStarted && flippedIndexes.length < 2 && !flippedIndexes.includes(index) && !matchedPairs.includes(cards[index])) {
       setFlippedIndexes((prev) => [...prev, index]);
@@ -96,7 +96,7 @@ const App = () => {
         <button key={l} onClick={() => handleLevelClick(l)}>
           {l}
         </button>
-      ))}
+      ))} 
     </div>
   );
   
