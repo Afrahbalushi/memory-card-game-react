@@ -23,6 +23,7 @@ const shuffleArray = (array) => {
   return newArray;
 };
 
+
 const App = () => {
   const [level, setLevel] = useState(null);
   const [cards, setCards] = useState([]);
